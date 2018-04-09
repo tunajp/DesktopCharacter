@@ -31,6 +31,7 @@ namespace DesktopCharacter
         float modelX = 0.0f, modelY = 0.0f, modelZ = 0.0f;
         float ROTATE_SPEED = (float)Math.PI / 90;//回転スピード
         private int XBuf, YBuf;
+        public float scale { get; set; }
 
         private NotifyIcon icon;
         public bool ignoreKeyAndMouse { get; set; }
@@ -58,6 +59,7 @@ namespace DesktopCharacter
             DX.DxLib_Init(); // DxLibの初期化処理
             DX.SetDrawScreen(DX.DX_SCREEN_BACK); // 描画先を裏画面に設定
 
+            this.scale = 1.0f;
             // 3Dモデルの読み込み(モデル名+000から始まる連番のモーションファイルも同時に読み込まれる)
             // モーションを別々に読み込む方法がないので、ファイル指定で読もうと思ったら、一回MV1DeleteModelでモデルを削除してモデルを読み直す
             // モデルを読む時にモーションファイルをリネームして同じディレクトリに構築する
@@ -71,6 +73,7 @@ namespace DesktopCharacter
                 throw new Exception();
             }
             DX.MV1SetPosition(modelHandle, DX.VGet(modelX, modelY, modelZ));
+            this.setScale();
 
             // モーション設定
             // 今回は000～002まであるので、0,1,2がそれぞれ000,001,002のモーションに対応しています。今回は2番(3つ目のモーション)を選択
@@ -229,6 +232,11 @@ namespace DesktopCharacter
             _y = -ox * (float)Math.Sin(ang) + oy* (float)Math.Cos(ang);
             x = _x + mx;
             y = _y + my;
+        }
+
+        public void setScale()
+        {
+            DX.MV1SetScale(modelHandle, DX.VGet(scale, scale, scale));
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)

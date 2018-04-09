@@ -20,14 +20,16 @@ namespace DesktopCharacter
 
             this.comboBox_screen.DisplayMember = "DeviceName";
             this.comboBox_screen.DataSource = Screen.AllScreens;
+            this.numericUpDown_motionspeed.DecimalPlaces = 3;
+            this.numericUpDown_scale.DecimalPlaces = 3;
         }
 
         public void parentForm(Form1 parentForm)
         {
             this.form = parentForm;
             this.form.ignoreKeyAndMouse = true;
-            string speed = this.form.playSpeed.ToString();
-            textBox_motionspeed.Text = speed;
+            numericUpDown_motionspeed.Value = (decimal)this.form.playSpeed;
+            numericUpDown_scale.Value = (decimal)this.form.scale;
         }
 
         private void comboBox_screen_SelectedIndexChanged(object sender, EventArgs e)
@@ -38,13 +40,28 @@ namespace DesktopCharacter
             this.form.Location = this.form.screen.Bounds.Location;
         }
 
-        private void textBox_motionspeed_TextChanged(object sender, EventArgs e)
+        private void numericUpDown_scale_ValueChanged(object sender, EventArgs e)
         {
             try
             {
-                float speed = float.Parse(textBox_motionspeed.Text);
+                float scale = (float)numericUpDown_scale.Value;
+                this.form.scale = scale;
+                this.form.setScale();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void numericUpDown_motionspeed_ValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                float speed = (float)numericUpDown_motionspeed.Value;
                 this.form.playSpeed = speed;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }
