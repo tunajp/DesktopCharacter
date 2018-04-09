@@ -14,7 +14,7 @@ namespace DesktopCharacter
     // デスクトップマスコットの作り方
     // https://qiita.com/massoumen/items/2985a0fb30472b97a590
 
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         /// <summary>
         /// モデルデータ
@@ -38,7 +38,7 @@ namespace DesktopCharacter
 
         public Screen screen { get; set; }
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
 
@@ -56,7 +56,12 @@ namespace DesktopCharacter
             DX.SetOutApplicationLogValidFlag(DX.FALSE); // Log.txtを生成しない
             DX.SetUserWindow(Handle); // DxLibの親ウィンドウをこのフォームに設定
             DX.SetZBufferBitDepth(24); // http://dxlib.o.oo7.jp/cgi/patiobbs/patio.cgi?mode=view&no=3751
-            DX.DxLib_Init(); // DxLibの初期化処理
+            int ret = DX.DxLib_Init(); // DxLibの初期化処理
+            if (ret == -1)
+            {
+                MessageBox.Show("DXライブラリの初期化に失敗しました", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new Exception();
+            }
             DX.SetDrawScreen(DX.DX_SCREEN_BACK); // 描画先を裏画面に設定
 
             this.scale = 1.0f;

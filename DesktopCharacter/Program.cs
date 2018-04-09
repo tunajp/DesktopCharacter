@@ -20,7 +20,7 @@ namespace DesktopCharacter
 
             try
             {
-                Form1 form = new Form1();
+                MainForm form = new MainForm();
                 form.Show();
                 // Application.Runではなく自分でループを作成
                 while (form.Created)

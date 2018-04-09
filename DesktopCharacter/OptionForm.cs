@@ -12,7 +12,7 @@ namespace DesktopCharacter
 {
     public partial class OptionForm : Form
     {
-        private Form1 form;
+        private MainForm form;
 
         public OptionForm()
         {
@@ -24,7 +24,7 @@ namespace DesktopCharacter
             this.numericUpDown_scale.DecimalPlaces = 3;
         }
 
-        public void parentForm(Form1 parentForm)
+        public void parentForm(MainForm parentForm)
         {
             this.form = parentForm;
             this.form.ignoreKeyAndMouse = true;
