@@ -17,6 +17,9 @@ namespace DesktopCharacter
         public OptionForm()
         {
             InitializeComponent();
+
+            this.comboBox_screen.DisplayMember = "DeviceName";
+            this.comboBox_screen.DataSource = Screen.AllScreens;
         }
 
         public void parentForm(Form1 parentForm)
@@ -25,6 +28,14 @@ namespace DesktopCharacter
             this.form.ignoreKeyAndMouse = true;
             string speed = this.form.playSpeed.ToString();
             textBox_motionspeed.Text = speed;
+        }
+
+        private void comboBox_screen_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.form.screen = (Screen)this.comboBox_screen.SelectedItem;
+            // 画面サイズをフォームのサイズに適用する
+            this.form.ClientSize = new Size(this.form.screen.Bounds.Width, this.form.screen.Bounds.Height);
+            this.form.Location = this.form.screen.Bounds.Location;
         }
 
         private void textBox_motionspeed_TextChanged(object sender, EventArgs e)

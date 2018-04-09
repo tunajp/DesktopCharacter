@@ -35,14 +35,19 @@ namespace DesktopCharacter
         private NotifyIcon icon;
         public bool ignoreKeyAndMouse { get; set; }
 
+        public Screen screen { get; set; }
+
         public Form1()
         {
             InitializeComponent();
 
             ignoreKeyAndMouse = false;
 
+            Screen[] allscreen = Screen.AllScreens;
+            screen = allscreen[0]; // マルチディスプレイの場合はあ0意外でメインディスプレイに投影できる
+
             // 画面サイズをフォームのサイズに適用する
-            ClientSize = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+            ClientSize = new Size(screen.Bounds.Width, screen.Bounds.Height);
             Text = "DesktopCharacter"; // ウィンドウの名前を設定
             this.TopMost = true; // 常に最前面
             ShowInTaskbar = false; // タスクバーに表示させない
@@ -84,6 +89,7 @@ namespace DesktopCharacter
             YBuf = 0;
 
             TaskTray();
+            this.Location = screen.Bounds.Location;
         }
 
         private void TaskTray()
@@ -125,7 +131,7 @@ namespace DesktopCharacter
             // 毎フレーム呼ぶ処理
 
             DX.ClearDrawScreen(); // 裏画面を消す
-            DX.DrawBox(0, 0, Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, DX.GetColor(1, 1, 1), DX.TRUE); // 背景を設定(透過させる)
+            DX.DrawBox(0, 0, screen.Bounds.Width, screen.Bounds.Height, DX.GetColor(1, 1, 1), DX.TRUE); // 背景を設定(透過させる)
 
             playTime += playSpeed; // 時間を進める
             // モーションの再生位置が終端まで来たら最初に戻す
