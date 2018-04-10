@@ -33,13 +33,19 @@ namespace DesktopCharacter
         private int XBuf, YBuf;
         public float scale { get; set; }
 
-        private NotifyIcon icon;
+        public NotifyIcon icon;
         public bool ignoreKeyAndMouse { get; set; }
 
+        public string currentLanguage = "Default";
         public Screen screen { get; set; }
 
         public MainForm()
         {
+            // Localize test code(TODO:restore from registry)
+            this.currentLanguage = "Default";
+            //System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
+            //System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+
             InitializeComponent();
 
             ignoreKeyAndMouse = false;
@@ -59,7 +65,7 @@ namespace DesktopCharacter
             int ret = DX.DxLib_Init(); // DxLibの初期化処理
             if (ret == -1)
             {
-                MessageBox.Show("DXライブラリの初期化に失敗しました", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Properties.Resources.InitDxLibFailed, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 throw new Exception();
             }
             DX.SetDrawScreen(DX.DX_SCREEN_BACK); // 描画先を裏画面に設定
@@ -74,7 +80,7 @@ namespace DesktopCharacter
             modelHandle = DX.MV1LoadModel(@"data\kizunaai\kizunaai.pmx");
             if (modelHandle == -1)
             {
-                MessageBox.Show("モデルのロードが正しく出来ませんでした", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Properties.Resources.LoadModelFailed, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 throw new Exception();
             }
             DX.MV1SetPosition(modelHandle, DX.VGet(modelX, modelY, modelZ));
@@ -100,7 +106,7 @@ namespace DesktopCharacter
             this.Location = screen.Bounds.Location;
         }
 
-        private void TaskTray()
+        public void TaskTray()
         {
             // タスクトレイにアイコンを表示する
             icon = new NotifyIcon();
@@ -110,12 +116,12 @@ namespace DesktopCharacter
             ContextMenuStrip menu = new ContextMenuStrip();
 
             ToolStripMenuItem menuItem0 = new ToolStripMenuItem();
-            menuItem0.Text = "&設定";
+            menuItem0.Text = Properties.Resources.Option;
             menuItem0.Click += new EventHandler(Option_Click);
             menu.Items.Add(menuItem0);
 
             ToolStripMenuItem menuItem1 = new ToolStripMenuItem();
-            menuItem1.Text = "&終了";
+            menuItem1.Text = Properties.Resources.Exit;
             menuItem1.Click += new EventHandler(Close_Click);
             menu.Items.Add(menuItem1);
 

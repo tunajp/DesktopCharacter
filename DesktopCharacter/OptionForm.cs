@@ -30,6 +30,45 @@ namespace DesktopCharacter
             this.form.ignoreKeyAndMouse = true;
             numericUpDown_motionspeed.Value = (decimal)this.form.playSpeed;
             numericUpDown_scale.Value = (decimal)this.form.scale;
+
+            string[] languages = { "Default", "ja-JP" };
+            int i = 0;
+            foreach (string lang in languages)
+            {
+                this.comboBox_language.Items.Add(lang);
+                if (this.form.currentLanguage == lang)
+                {
+                    this.comboBox_language.SelectedIndex = i;
+                }
+                i++;
+            }
+        }
+
+        private void comboBox_language_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string lang = this.comboBox_language.Text;
+            if (this.form.currentLanguage == lang)
+            {
+                return;
+            }
+            string org_lang = lang;
+            if (lang == "Default")
+            {
+                lang = "en-US";
+            }
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(lang);
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(lang);
+            this.form.currentLanguage = org_lang;
+
+            this.Close();
+            OptionForm optionForm = new OptionForm();
+            optionForm.parentForm(this.form);
+            optionForm.Show();
+
+            this.form.icon.Dispose();
+            this.form.TaskTray();
+
+            // TODO: save to registry
         }
 
         private void comboBox_screen_SelectedIndexChanged(object sender, EventArgs e)

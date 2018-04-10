@@ -31,7 +31,7 @@ namespace DesktopCharacter
             }
             catch (Exception e)
             {
-
+                System.Diagnostics.Trace.WriteLine(e);
             }
         }
     }
