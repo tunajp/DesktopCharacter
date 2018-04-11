@@ -46,6 +46,8 @@
             this.dataGridView_model = new System.Windows.Forms.DataGridView();
             this.dataGridView_motion = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
+            this.comboBox_modelsearch = new System.Windows.Forms.ComboBox();
+            this.comboBox_motionsearch = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_motionspeed)).BeginInit();
@@ -141,6 +143,8 @@
             this.tableLayoutPanel1.Controls.Add(this.dataGridView_model, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.dataGridView_motion, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.button1, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.comboBox_modelsearch, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.comboBox_motionsearch, 2, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // label5
@@ -156,6 +160,7 @@
             // dataGridView_model
             // 
             this.dataGridView_model.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tableLayoutPanel1.SetColumnSpan(this.dataGridView_model, 3);
             resources.ApplyResources(this.dataGridView_model, "dataGridView_model");
             this.dataGridView_model.Name = "dataGridView_model";
             this.dataGridView_model.RowTemplate.Height = 21;
@@ -163,6 +168,7 @@
             // dataGridView_motion
             // 
             this.dataGridView_motion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tableLayoutPanel1.SetColumnSpan(this.dataGridView_motion, 3);
             resources.ApplyResources(this.dataGridView_motion, "dataGridView_motion");
             this.dataGridView_motion.Name = "dataGridView_motion";
             this.dataGridView_motion.RowTemplate.Height = 21;
@@ -172,6 +178,18 @@
             resources.ApplyResources(this.button1, "button1");
             this.button1.Name = "button1";
             this.button1.UseVisualStyleBackColor = true;
+            // 
+            // comboBox_modelsearch
+            // 
+            resources.ApplyResources(this.comboBox_modelsearch, "comboBox_modelsearch");
+            this.comboBox_modelsearch.FormattingEnabled = true;
+            this.comboBox_modelsearch.Name = "comboBox_modelsearch";
+            // 
+            // comboBox_motionsearch
+            // 
+            resources.ApplyResources(this.comboBox_motionsearch, "comboBox_motionsearch");
+            this.comboBox_motionsearch.FormattingEnabled = true;
+            this.comboBox_motionsearch.Name = "comboBox_motionsearch";
             // 
             // OptionForm
             // 
@@ -213,5 +231,7 @@
         private System.Windows.Forms.DataGridView dataGridView_model;
         private System.Windows.Forms.DataGridView dataGridView_motion;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox comboBox_modelsearch;
+        private System.Windows.Forms.ComboBox comboBox_motionsearch;
     }
 }
