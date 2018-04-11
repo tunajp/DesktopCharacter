@@ -330,8 +330,10 @@ DesktopCharacter/bin/Release/*.exe
 DesktopCharacter/bin/Debug/*.exe.config
 DesktopCharacter/bin/Release/*.exe.config
 *.dll
+Data.db
 !.gitkeep
 !DxLibW.dll
 !DxLibW_x64.dll
 !DxLibWDotNet.dll
 !if_girl-avatar_2903195.ico
+/DesktopCharacter/bin/Debug/SQLite-net.xml

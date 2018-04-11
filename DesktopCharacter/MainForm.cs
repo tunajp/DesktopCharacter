@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DxLibDLL;
+using SQLite;
 
 namespace DesktopCharacter
 {
@@ -20,6 +21,11 @@ namespace DesktopCharacter
         /// モデルデータ
         /// </summary>
         private int modelHandle;
+
+        private SQLiteConnection db;
+        public Data.OptionData optionData;
+        public Data.ModelData modelData;
+        public Data.MotionData motionData;
 
         private int attachIndex;
         private float totalTime;
@@ -41,10 +47,24 @@ namespace DesktopCharacter
 
         public MainForm()
         {
-            // Localize test code(TODO:restore from registry)
-            this.currentLanguage = "Default";
-            //System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
-            //System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+            // find execute file path
+            string appPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var directory = System.IO.Path.GetDirectoryName(appPath);
+
+            string databaseFile = System.IO.Path.Combine(directory, "data", "Data.db");
+            db = new SQLiteConnection(databaseFile);
+
+            optionData = new Data.OptionData(db);
+            this.currentLanguage = optionData.getLanguage();
+
+            // switch Localization
+            string lang = this.currentLanguage;
+            if (lang == "Default")
+            {
+                lang = "en-US";
+            }
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(lang);
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(lang);
 
             InitializeComponent();
 

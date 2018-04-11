@@ -80,6 +80,10 @@ namespace DesktopCharacter
             {
                 lang = "en-US";
             }
+
+            // save to database
+            this.form.optionData.setLanguage(org_lang);
+
             System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(lang);
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(lang);
             this.form.currentLanguage = org_lang;
@@ -91,8 +95,6 @@ namespace DesktopCharacter
 
             this.form.icon.Dispose();
             this.form.TaskTray();
-
-            // TODO: save to registry
         }
 
         private void comboBox_screen_SelectedIndexChanged(object sender, EventArgs e)
