@@ -22,6 +22,30 @@ namespace DesktopCharacter
             this.comboBox_screen.DataSource = Screen.AllScreens;
             this.numericUpDown_motionspeed.DecimalPlaces = 3;
             this.numericUpDown_scale.DecimalPlaces = 3;
+
+            this.initDataGridView();
+        }
+
+        private void initDataGridView()
+        {
+            dataGridView_model.RowHeadersVisible = false;
+            dataGridView_model.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView_model.ColumnCount = 6;
+            dataGridView_model.Columns[0].HeaderText = "Enable";
+            dataGridView_model.Columns[1].HeaderText = "Name";
+            dataGridView_model.Columns[2].HeaderText = "Download";
+            dataGridView_model.Columns[3].HeaderText = "ModelFile";
+            dataGridView_model.Columns[4].HeaderText = "Reference";
+            dataGridView_model.Columns[5].HeaderText = "MotionName";
+
+            dataGridView_motion.RowHeadersVisible = false;
+            dataGridView_motion.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView_motion.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView_motion.ColumnCount = 4;
+            dataGridView_motion.Columns[0].HeaderText = "Motion";
+            dataGridView_motion.Columns[1].HeaderText = "Download";
+            dataGridView_motion.Columns[2].HeaderText = "MotionFile";
+            dataGridView_motion.Columns[3].HeaderText = "Reference";
         }
 
         public void parentForm(MainForm parentForm)

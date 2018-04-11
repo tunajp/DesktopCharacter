@@ -40,10 +40,20 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.dataGridView_model = new System.Windows.Forms.DataGridView();
+            this.dataGridView_motion = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_motionspeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_scale)).BeginInit();
+            this.tabPage2.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_model)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_motion)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -118,9 +128,50 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.tableLayoutPanel1);
             resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
+            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.dataGridView_model, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.dataGridView_motion, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.button1, 0, 4);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            // 
+            // label6
+            // 
+            resources.ApplyResources(this.label6, "label6");
+            this.label6.Name = "label6";
+            // 
+            // dataGridView_model
+            // 
+            this.dataGridView_model.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            resources.ApplyResources(this.dataGridView_model, "dataGridView_model");
+            this.dataGridView_model.Name = "dataGridView_model";
+            this.dataGridView_model.RowTemplate.Height = 21;
+            // 
+            // dataGridView_motion
+            // 
+            this.dataGridView_motion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            resources.ApplyResources(this.dataGridView_motion, "dataGridView_motion");
+            this.dataGridView_motion.Name = "dataGridView_motion";
+            this.dataGridView_motion.RowTemplate.Height = 21;
+            // 
+            // button1
+            // 
+            resources.ApplyResources(this.button1, "button1");
+            this.button1.Name = "button1";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // OptionForm
             // 
@@ -134,6 +185,11 @@
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_motionspeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_scale)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_model)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_motion)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -151,5 +207,11 @@
         private System.Windows.Forms.NumericUpDown numericUpDown_motionspeed;
         private System.Windows.Forms.ComboBox comboBox_language;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.DataGridView dataGridView_model;
+        private System.Windows.Forms.DataGridView dataGridView_motion;
+        private System.Windows.Forms.Button button1;
     }
 }
