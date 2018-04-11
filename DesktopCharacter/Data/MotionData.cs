@@ -16,8 +16,11 @@ namespace DesktopCharacter.Data
         public string Name { get; set; }
 
         public string Url { get; set; }
+        public int LatestVersion { get; set; }
+        public string LicenceFile { get; set; }
         // 0:yet 1:complete
         public int DownloadStatus { get; set; }
+        public int LocalVersion { get; set; }
 
         public string FileName { get; set; }
 
