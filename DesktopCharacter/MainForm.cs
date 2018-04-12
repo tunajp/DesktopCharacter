@@ -55,6 +55,9 @@ namespace DesktopCharacter
             db = new SQLiteConnection(databaseFile);
 
             optionData = new Data.OptionData(db);
+            modelData = new Data.ModelData(db);
+            motionData = new Data.MotionData(db);
+
             this.currentLanguage = optionData.getLanguage();
 
             // switch Localization

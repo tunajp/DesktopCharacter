@@ -41,5 +41,30 @@ namespace DesktopCharacter.Data
             this.db = _db;
         }
 
+        public List<Model> getEnabledModels()
+        {
+            db.CreateTable<Model>();
+
+            var query = db.Table<Model>().Where(v => v.Enabled == true);
+            List<Model> list = new List<Model>();
+            foreach (var q in query)
+            {
+                list.Add(q);
+            }
+            return list;
+        }
+
+        public List<Model> getAllModels()
+        {
+            db.CreateTable<Model>();
+
+            var query = db.Table<Model>();
+            List<Model> list = new List<Model>();
+            foreach (var q in query)
+            {
+                list.Add(q);
+            }
+            return list;
+        }
     }
 }

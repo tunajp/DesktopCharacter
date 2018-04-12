@@ -36,5 +36,18 @@ namespace DesktopCharacter.Data
         {
             this.db = _db;
         }
+
+        public List<Motion> getAllMotions()
+        {
+            db.CreateTable<Model>();
+
+            var query = db.Table<Motion>();
+            List<Motion> list = new List<Motion>();
+            foreach (var q in query)
+            {
+                list.Add(q);
+            }
+            return list;
+        }
     }
 }
