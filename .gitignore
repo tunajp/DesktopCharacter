@@ -324,7 +324,13 @@ ASALocalRun/
 *.nvuser
 
 DesktopCharacter/bin/Debug/data/*
+!DesktopCharacter/bin/Debug/data/Lat式ミクVer2.31
+!DesktopCharacter/bin/Debug/data/女の子の撮影モーション(カメラアピール編)
+!DesktopCharacter/bin/Debug/data/女の子の撮影モーション(寝そべり編)
 DesktopCharacter/bin/Release/data/*
+!DesktopCharacter/bin/Release/data/Lat式ミクVer2.31
+!DesktopCharacter/bin/Release/data/女の子の撮影モーション(カメラアピール編)
+!DesktopCharacter/bin/Release/data/女の子の撮影モーション(寝そべり編)
 DesktopCharacter/bin/Debug/*.exe
 DesktopCharacter/bin/Release/*.exe
 DesktopCharacter/bin/Debug/*.exe.config

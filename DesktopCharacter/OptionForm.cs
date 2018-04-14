@@ -65,7 +65,7 @@ namespace DesktopCharacter
             dataGridView_model.Columns.Insert(3, downloadColumn);
             dataGridView_model.Columns.Insert(5, referenceColumn);
             dataGridView_model.Columns.Insert(6, motionColumn);
-            dataGridView_model.Columns[0].HeaderText = "Id";
+            dataGridView_model.Columns[0].HeaderText = "Guid";
             dataGridView_model.Columns[0].Visible = false;
             //dataGridView_model.Columns[1].HeaderText = "Enable";
             dataGridView_model.Columns[2].HeaderText = "Name";
@@ -99,7 +99,7 @@ namespace DesktopCharacter
             }
             dataGridView_motion.Columns.Insert(2, downloadColumn2);
             dataGridView_motion.Columns.Insert(4, referenceColumn2);
-            dataGridView_motion.Columns[0].HeaderText = "Id";
+            dataGridView_motion.Columns[0].HeaderText = "Guid";
             dataGridView_motion.Columns[0].Visible = false;
             dataGridView_motion.Columns[1].HeaderText = "Motion";
             //dataGridView_motion.Columns[2].HeaderText = "Download";
@@ -148,58 +148,30 @@ namespace DesktopCharacter
         private void getData()
         {
             // model dara
-#if false
             List<Data.Model> models = this.form.modelData.getAllModels();
-#else
-            // testdata
-            List<Data.Model> models = new List<Data.Model>();
-            Data.Model m = new Data.Model();
-            m.Id = 1;
-            m.Name = "model name1";
-            m.FileName = @"D:\Projects\data\hoge.pmd";
-            m.MotionId = 1;
-            models.Add(m);
-            Data.Model m2 = new Data.Model();
-            m2.Id = 2;
-            m2.Name = "model name2";
-            m2.FileName = @"D:\Projects\data\hogehoge.pmd";
-            m2.MotionId = 0;
-            models.Add(m2);
-#endif
 
             // datagridview
             foreach (Data.Model model in models)
             {
                 DataGridViewRow item = new DataGridViewRow();
                 item.CreateCells(dataGridView_model);
-                item.Cells[0].Value = model.Id;
+                item.Cells[0].Value = model.Guid;
                 item.Cells[1].Value = true; //
                 item.Cells[2].Value = model.Name;
                 item.Cells[4].Value = model.FileName;
-                item.Cells[6].Value = "モーション2";// model.MotionId -> motion name;
+                item.Cells[6].Value = "モーション2";// model.MotionGuid -> motion name;
                 dataGridView_model.Rows.Add(item);
             }
 
             // motion dara
-#if false
             List<Data.Motion> motions = this.form.motionData.getAllMotions();
-#else
-            // testdata
-            List<Data.Motion> motions = new List<Data.Motion>();
-            Data.Motion m3 = new Data.Motion();
-            m3.Id = 1;
-            m3.Name = "motion name1";
-            m3.FileName = @"D:\Projects\data\hoge.pmd";
-            m.MotionId = 1;
-            motions.Add(m3);
-#endif
 
             // datagridview
             foreach (Data.Motion motion in motions)
             {
                 DataGridViewRow item = new DataGridViewRow();
                 item.CreateCells(dataGridView_motion);
-                item.Cells[0].Value = motion.Id;
+                item.Cells[0].Value = motion.Guid;
                 item.Cells[1].Value = motion.Name; //
                 item.Cells[3].Value = motion.FileName;
                 dataGridView_motion.Rows.Add(item);

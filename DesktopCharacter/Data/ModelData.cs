@@ -9,8 +9,8 @@ namespace DesktopCharacter.Data
 {
     public class Model
     {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
+        [PrimaryKey]
+        public string Guid { get; set; }
         
         public bool Enabled { get; set; }
 
@@ -26,7 +26,7 @@ namespace DesktopCharacter.Data
 
         public string FileName { get; set; }
 
-        public int MotionId { get; set; }
+        public string MotionGuid { get; set; }
 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
@@ -41,9 +41,14 @@ namespace DesktopCharacter.Data
             this.db = _db;
         }
 
-        public List<Model> getEnabledModels()
+        public List<Model> getEnabledModels(string directory)
         {
             db.CreateTable<Model>();
+
+            if (this.getAllModels().Count() == 0)
+            {
+                this.initialize(directory);
+            }
 
             var query = db.Table<Model>().Where(v => v.Enabled == true);
             List<Model> list = new List<Model>();
@@ -65,6 +70,24 @@ namespace DesktopCharacter.Data
                 list.Add(q);
             }
             return list;
+        }
+
+        private void initialize(string directory)
+        {
+            db.Insert(new Model()
+            {
+                Guid = "4c738631-1a82-40da-a08d-51ba8d06011f",
+                Enabled = true,
+                Name = "Lat式ミク",
+                Url = "",
+                LatestVersion = 231,
+                DownloadStatus = 1,
+                LocalVersion = 231,
+                FileName = System.IO.Path.Combine(directory, "data", "Lat式ミクVer2.31", "Lat式ミクVer2.31_Normal.pmd"),
+                MotionGuid = "20222ace-f86c-4e7e-ad28-b81c711fe028",
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+            });
         }
     }
 }

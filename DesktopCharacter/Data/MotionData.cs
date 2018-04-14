@@ -9,8 +9,8 @@ namespace DesktopCharacter.Data
 {
     public class Motion
     {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
+        [PrimaryKey]
+        public string Guid { get; set; }
 
         [MaxLength(1024)]
         public string Name { get; set; }
@@ -37,9 +37,21 @@ namespace DesktopCharacter.Data
             this.db = _db;
         }
 
-        public List<Motion> getAllMotions()
+        public List<Motion> getMotions(string directory)
         {
             db.CreateTable<Model>();
+
+            if (this.getAllMotions().Count() == 0)
+            {
+                this.initialize(directory);
+            }
+
+            return this.getAllMotions();
+        }
+
+        public List<Motion> getAllMotions()
+        {
+            db.CreateTable<Motion>();
 
             var query = db.Table<Motion>();
             List<Motion> list = new List<Motion>();
@@ -48,6 +60,34 @@ namespace DesktopCharacter.Data
                 list.Add(q);
             }
             return list;
+        }
+
+        private void initialize(string directory)
+        {
+            db.Insert(new Motion()
+            {
+                Guid = "ae61d85b-2bba-4ed7-b57b-f630f3a3d30b",
+                Name = "女の子の撮影モーション(カメラアピール編)",
+                Url = "",
+                LatestVersion = 1,
+                DownloadStatus = 1,
+                LocalVersion = 1,
+                FileName = System.IO.Path.Combine(directory, "data", "女の子の撮影モーション(カメラアピール編)", "ミク.vmd"),
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+            });
+            db.Insert(new Motion()
+            {
+                Guid = "20222ace-f86c-4e7e-ad28-b81c711fe028",
+                Name = "女の子の撮影モーション(寝そべり編)",
+                Url = "",
+                LatestVersion = 1,
+                DownloadStatus = 1,
+                LocalVersion = 1,
+                FileName = System.IO.Path.Combine(directory, "data", "女の子の撮影モーション(寝そべり編)", "女の子の撮影モーション(寝そべり編).vmd"),
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+            });
         }
     }
 }

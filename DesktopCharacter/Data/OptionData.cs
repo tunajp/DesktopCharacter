@@ -9,10 +9,7 @@ namespace DesktopCharacter.Data
 {
     public class Option
     {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
-
-        [MaxLength(1024)]
+        [PrimaryKey, MaxLength(1024)]
         public string Name { get; set; }
 
         public string Value { get; set; }
@@ -44,7 +41,7 @@ namespace DesktopCharacter.Data
             }
             foreach (var language in query)
             {
-                System.Diagnostics.Trace.WriteLine("stock: " + language.Id + " " + language.Name + " " + language.Value);
+                System.Diagnostics.Trace.WriteLine(language.Name + " " + language.Value);
                 lang = language.Value;
             }
             return lang;
