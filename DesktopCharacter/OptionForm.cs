@@ -14,6 +14,7 @@ namespace DesktopCharacter
     {
         private MainForm form;
         private bool ignore_changedEvent;
+        private DataGridViewComboBoxColumn motionColumn;
 
         public OptionForm()
         {
@@ -60,7 +61,7 @@ namespace DesktopCharacter
                 referenceColumn.DefaultCellStyle.NullValue = "Reference";
                 referenceColumn.Text = "Reference";
             }
-            DataGridViewComboBoxColumn motionColumn = new DataGridViewComboBoxColumn();
+            motionColumn = new DataGridViewComboBoxColumn();
             {
                 motionColumn.HeaderText = "motion";
             }
@@ -150,34 +151,45 @@ namespace DesktopCharacter
 
         private void getData()
         {
-            // model data
-            List<Data.Model> models = this.form.modelData.getAllModels();
-
-            // datagridview
-            foreach (Data.Model model in models)
-            {
-                DataGridViewRow item = new DataGridViewRow();
-                item.CreateCells(dataGridView_model);
-                item.Cells[0].Value = model.Guid;
-                item.Cells[1].Value = true; //
-                item.Cells[2].Value = model.Name;
-                item.Cells[4].Value = model.FileName;
-                item.Cells[6].Value = "モーション2";// model.MotionGuid -> motion name;
-                dataGridView_model.Rows.Add(item);
-            }
-
             // motion data
             List<Data.Motion> motions = this.form.motionData.getAllMotions();
 
+            motionColumn.Items.Clear();
             // datagridview
             foreach (Data.Motion motion in motions)
             {
                 DataGridViewRow item = new DataGridViewRow();
                 item.CreateCells(dataGridView_motion);
                 item.Cells[0].Value = motion.Guid;
-                item.Cells[1].Value = motion.Name; //
+                item.Cells[1].Value = motion.Name;
                 item.Cells[3].Value = motion.FileName;
                 dataGridView_motion.Rows.Add(item);
+
+                motionColumn.Items.Add(motion.Name);
+            }
+
+            // model data
+            List<Data.Model> models = this.form.modelData.getAllModels();
+
+            // datagridview
+            foreach (Data.Model model in models)
+            {
+                string motionName = "";
+                foreach(Data.Motion motion in motions)
+                {
+                    if (motion.Guid == model.MotionGuid)
+                    {
+                        motionName = motion.Name;
+                    }
+                }
+                DataGridViewRow item = new DataGridViewRow();
+                item.CreateCells(dataGridView_model);
+                item.Cells[0].Value = model.Guid;
+                item.Cells[1].Value = model.Enabled;
+                item.Cells[2].Value = model.Name;
+                item.Cells[4].Value = model.FileName;
+                item.Cells[6].Value = motionName;// model.MotionGuid -> motion name;
+                dataGridView_model.Rows.Add(item);
             }
         }
 
@@ -300,27 +312,46 @@ namespace DesktopCharacter
             }
             System.Diagnostics.Trace.WriteLine(guid + dgv.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
 
+            string motion_name = "";
+            if (dgv.Rows[e.RowIndex].Cells[6].Value != null)
+            {
+                motion_name = dgv.Rows[e.RowIndex].Cells[6].Value.ToString();
+            }
+            string motionGuid = "";
+
+            List<Data.Motion> motions = this.form.motionData.getAllMotions();
+            foreach (Data.Motion motion in motions)
+            {
+                if (motion_name == motion.Name)
+                {
+                    motionGuid = motion.Guid;
+                }
+            }
+
             if (guid.Length == 0)
             {
                 // add data
                 Data.Model model = new Data.Model();
                 model.Guid = Guid.NewGuid().ToString();
-                model.Enabled = (bool)dgv.Rows[e.RowIndex].Cells[1].Value;
-                model.Name = dgv.Rows[e.RowIndex].Cells[2].Value.ToString();
-                model.FileName = dgv.Rows[e.RowIndex].Cells[4].Value.ToString();
-                model.MotionGuid = "";
-                // TODO: add
+                model.Enabled = dgv.Rows[e.RowIndex].Cells[1].Value == null ? false : (bool)dgv.Rows[e.RowIndex].Cells[1].Value;
+                model.Name = dgv.Rows[e.RowIndex].Cells[2].Value == null ? "" : dgv.Rows[e.RowIndex].Cells[2].Value.ToString();
+                model.FileName = dgv.Rows[e.RowIndex].Cells[4].Value == null ? "" : dgv.Rows[e.RowIndex].Cells[4].Value.ToString();
+                model.MotionGuid = motionGuid;
+                // add
+                this.form.modelData.AddModel(model);
+                dgv.Rows[e.RowIndex].Cells[0].Value = model.Guid;
             }
             else
             {
                 // update data
                 Data.Model model = new Data.Model();
                 model.Guid = dgv.Rows[e.RowIndex].Cells[0].Value.ToString();
-                model.Enabled = (bool)dgv.Rows[e.RowIndex].Cells[1].Value;
-                model.Name = dgv.Rows[e.RowIndex].Cells[2].Value.ToString();
-                model.FileName = dgv.Rows[e.RowIndex].Cells[4].Value.ToString();
-                model.MotionGuid = "";
-                // TODO: update
+                model.Enabled = dgv.Rows[e.RowIndex].Cells[1].Value == null ? false : (bool)dgv.Rows[e.RowIndex].Cells[1].Value;
+                model.Name = dgv.Rows[e.RowIndex].Cells[2].Value == null ? "" : dgv.Rows[e.RowIndex].Cells[2].Value.ToString();
+                model.FileName = dgv.Rows[e.RowIndex].Cells[4].Value == null ? "" : dgv.Rows[e.RowIndex].Cells[4].Value.ToString();
+                model.MotionGuid = motionGuid;
+                // update
+                this.form.modelData.UpdateModel(model);
             }
             this.form.loadFiles();
         }
@@ -368,12 +399,33 @@ namespace DesktopCharacter
             if (guid.Length == 0)
             {
                 // add data
-            } else
+                Data.Motion motion = new Data.Motion();
+                motion.Guid = Guid.NewGuid().ToString();
+                motion.Name = dgv.Rows[e.RowIndex].Cells[1].Value == null ? "" : dgv.Rows[e.RowIndex].Cells[1].Value.ToString();
+                motion.FileName = dgv.Rows[e.RowIndex].Cells[3].Value == null ? "" : dgv.Rows[e.RowIndex].Cells[3].Value.ToString();
+                // add
+                this.form.motionData.AddMotion(motion);
+                dgv.Rows[e.RowIndex].Cells[0].Value = motion.Guid;
+            }
+            else
             {
                 // update data
+                Data.Motion motion = new Data.Motion();
+                motion.Guid = dgv.Rows[e.RowIndex].Cells[0].Value.ToString();
+                motion.Name = dgv.Rows[e.RowIndex].Cells[1].Value == null ? "" : dgv.Rows[e.RowIndex].Cells[1].Value.ToString();
+                motion.FileName = dgv.Rows[e.RowIndex].Cells[3].Value == null ? "" : dgv.Rows[e.RowIndex].Cells[3].Value.ToString();
+                // update
+                this.form.motionData.UpdateMotion(motion);
             }
 
             // モデルグリッドのmotionコンボを作り直す
+            List<Data.Motion> motions = this.form.motionData.getAllMotions();
+
+            motionColumn.Items.Clear();
+            foreach (Data.Motion motion in motions)
+            {
+                motionColumn.Items.Add(motion.Name);
+            }
         }
     }
 }

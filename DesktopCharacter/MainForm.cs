@@ -219,6 +219,7 @@ namespace DesktopCharacter
                             {
                                 mh.modelY += 0.5f;
                             }
+                            System.Diagnostics.Trace.WriteLine(mh.modelX + "," + mh.modelY + "," + mh.modelZ);
                             //当たり判定したモデルを移動する
                             DX.MV1SetPosition(mh.modelHandle, DX.VGet(mh.modelX, mh.modelY, mh.modelZ));
                         // FIXME:}
@@ -318,6 +319,7 @@ namespace DesktopCharacter
             // create temporary directory
             System.IO.Directory.CreateDirectory(this.temp_root_directory);
 
+            int count = 0;
             foreach (Data.Model model in models)
             {
                 // filename
@@ -353,7 +355,7 @@ namespace DesktopCharacter
                     throw new Exception();
                 }
                 //TODO: モデルをランダムに移動しておく必要があるかもしれない
-                mh.modelX = 0.0f;
+                mh.modelX = 0.0f + count * 8.0f;
                 mh.modelY = 0.0f;
                 mh.modelZ = 0.0f;
                 DX.MV1SetPosition(mh.modelHandle, DX.VGet(mh.modelX, mh.modelY, mh.modelZ));
@@ -371,6 +373,8 @@ namespace DesktopCharacter
 
                 modelHandles.Add(mh);
                 this.setScale();
+
+                count++;
             }
         }
 

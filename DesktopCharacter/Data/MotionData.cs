@@ -89,5 +89,17 @@ namespace DesktopCharacter.Data
                 UpdatedAt = DateTime.Now,
             });
         }
+
+        public void AddMotion(Motion motion)
+        {
+            motion.CreatedAt = DateTime.Now;
+            var s = db.Insert(motion);
+        }
+
+        public void UpdateMotion(Motion motion)
+        {
+            motion.UpdatedAt = DateTime.Now;
+            var s = db.Update(motion);
+        }
     }
 }

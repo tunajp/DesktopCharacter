@@ -89,5 +89,17 @@ namespace DesktopCharacter.Data
                 UpdatedAt = DateTime.Now,
             });
         }
+
+        public void AddModel(Model model)
+        {
+            model.CreatedAt = DateTime.Now;
+            var s = db.Insert(model);
+        }
+
+        public void UpdateModel(Model model)
+        {
+            model.UpdatedAt = DateTime.Now;
+            var s = db.Update(model);
+        }
     }
 }
