@@ -295,7 +295,7 @@ namespace DesktopCharacter
             TransparencyKey = Color.FromArgb(1, 1, 1); // 透過色を設定
         }
 
-        private void loadFiles()
+        public void loadFiles()
         {
             List<Data.Model> models = modelData.getEnabledModels(this.directory);
             List<Data.Motion> motions = motionData.getMotions(this.directory);
@@ -311,6 +311,8 @@ namespace DesktopCharacter
                 // delete directory
                 System.IO.Directory.Delete(temp_root_directory, true);
             }
+            modelHandles.RemoveAll(v => v.modelHandle != -1);
+
             // temporary directory
             this.temp_root_directory = System.IO.Path.Combine(System.IO.Path.GetTempPath(), this.generateRandomString(16));
             // create temporary directory
@@ -432,6 +434,7 @@ namespace DesktopCharacter
         public float modelX = 0.0f;
         public float modelY = 0.0f;
         public float modelZ = 0.0f;
+        // TODO: rotateを個別にもたせる
         public int attachIndex;
     }
 }

@@ -164,6 +164,9 @@
             resources.ApplyResources(this.dataGridView_model, "dataGridView_model");
             this.dataGridView_model.Name = "dataGridView_model";
             this.dataGridView_model.RowTemplate.Height = 21;
+            this.dataGridView_model.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_model_CellContentClick);
+            this.dataGridView_model.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_model_CellValueChanged);
+            this.dataGridView_model.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView_model_CurrentCellDirtyStateChanged);
             // 
             // dataGridView_motion
             // 
@@ -172,6 +175,8 @@
             resources.ApplyResources(this.dataGridView_motion, "dataGridView_motion");
             this.dataGridView_motion.Name = "dataGridView_motion";
             this.dataGridView_motion.RowTemplate.Height = 21;
+            this.dataGridView_motion.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_motion_CellContentClick);
+            this.dataGridView_motion.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_motion_CellValueChanged);
             // 
             // button1
             // 

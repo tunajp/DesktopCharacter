@@ -13,6 +13,7 @@ namespace DesktopCharacter
     public partial class OptionForm : Form
     {
         private MainForm form;
+        private bool ignore_changedEvent;
 
         public OptionForm()
         {
@@ -23,7 +24,9 @@ namespace DesktopCharacter
             this.numericUpDown_motionspeed.DecimalPlaces = 3;
             this.numericUpDown_scale.DecimalPlaces = 3;
 
+            this.ignore_changedEvent = true;
             this.initDataGridView();
+            this.ignore_changedEvent = false;
         }
 
         private void initDataGridView()
@@ -147,7 +150,7 @@ namespace DesktopCharacter
 
         private void getData()
         {
-            // model dara
+            // model data
             List<Data.Model> models = this.form.modelData.getAllModels();
 
             // datagridview
@@ -163,7 +166,7 @@ namespace DesktopCharacter
                 dataGridView_model.Rows.Add(item);
             }
 
-            // motion dara
+            // motion data
             List<Data.Motion> motions = this.form.motionData.getAllMotions();
 
             // datagridview
@@ -245,6 +248,132 @@ namespace DesktopCharacter
         private void OptionForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.form.ignoreKeyAndMouse = false;
+        }
+
+        private void dataGridView_model_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView dgv = (DataGridView)sender;
+            //"Button"列ならば、ボタンがクリックされた
+            if (dgv.Columns[e.ColumnIndex].Name == "referenceButton")
+            {
+                string guid = "";
+                if (dgv.Rows[e.RowIndex].Cells[0].Value != null)
+                {
+                    guid = dgv.Rows[e.RowIndex].Cells[0].Value.ToString();
+                }
+                //MessageBox.Show(guid + "モデル行のボタンがクリックされました。");
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.RestoreDirectory = true;
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        //MessageBox.Show(openFileDialog.FileName);
+                        dgv.Rows[e.RowIndex].Cells[4].Value = openFileDialog.FileName;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                    }
+                }
+            }
+        }
+
+        private void dataGridView_model_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            DataGridView dgv = (DataGridView)sender;
+            if (dgv.CurrentCellAddress.X == 1 && dgv.IsCurrentCellDirty) // checkbox
+            {
+                //コミットする
+                dgv.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+        }
+
+        private void dataGridView_model_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (this.ignore_changedEvent) return;
+            DataGridView dgv = (DataGridView)sender;
+            string guid = "";
+            if (dgv.Rows[e.RowIndex].Cells[0].Value != null)
+            {
+                guid = dgv.Rows[e.RowIndex].Cells[0].Value.ToString();
+            }
+            System.Diagnostics.Trace.WriteLine(guid + dgv.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+
+            if (guid.Length == 0)
+            {
+                // add data
+                Data.Model model = new Data.Model();
+                model.Guid = Guid.NewGuid().ToString();
+                model.Enabled = (bool)dgv.Rows[e.RowIndex].Cells[1].Value;
+                model.Name = dgv.Rows[e.RowIndex].Cells[2].Value.ToString();
+                model.FileName = dgv.Rows[e.RowIndex].Cells[4].Value.ToString();
+                model.MotionGuid = "";
+                // TODO: add
+            }
+            else
+            {
+                // update data
+                Data.Model model = new Data.Model();
+                model.Guid = dgv.Rows[e.RowIndex].Cells[0].Value.ToString();
+                model.Enabled = (bool)dgv.Rows[e.RowIndex].Cells[1].Value;
+                model.Name = dgv.Rows[e.RowIndex].Cells[2].Value.ToString();
+                model.FileName = dgv.Rows[e.RowIndex].Cells[4].Value.ToString();
+                model.MotionGuid = "";
+                // TODO: update
+            }
+            this.form.loadFiles();
+        }
+
+        private void dataGridView_motion_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView dgv = (DataGridView)sender;
+            //"Button"列ならば、ボタンがクリックされた
+            if (dgv.Columns[e.ColumnIndex].Name == "referenceButton")
+            {
+                string guid = "";
+                if (dgv.Rows[e.RowIndex].Cells[0].Value != null)
+                {
+                    guid = dgv.Rows[e.RowIndex].Cells[0].Value.ToString();
+                }
+                //MessageBox.Show(guid + "モーション行のボタンがクリックされました。");
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.RestoreDirectory = true;
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        //MessageBox.Show(openFileDialog.FileName);
+                        dgv.Rows[e.RowIndex].Cells[3].Value = openFileDialog.FileName;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                    }
+                }
+            }
+        }
+
+        private void dataGridView_motion_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (this.ignore_changedEvent) return;
+            DataGridView dgv = (DataGridView)sender;
+            string guid = "";
+            if (dgv.Rows[e.RowIndex].Cells[0].Value != null)
+            {
+                guid = dgv.Rows[e.RowIndex].Cells[0].Value.ToString();
+            }
+            System.Diagnostics.Trace.WriteLine(guid + dgv.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+
+            if (guid.Length == 0)
+            {
+                // add data
+            } else
+            {
+                // update data
+            }
+
+            // モデルグリッドのmotionコンボを作り直す
         }
     }
 }
